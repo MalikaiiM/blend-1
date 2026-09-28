@@ -1,0 +1,24 @@
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 50; height: var(--nav-h);
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  padding-inline: var(--gutter);
+  transition: background var(--t-med) var(--ease), backdrop-filter var(--t-med) var(--ease), border-color var(--t-med);
+  border-bottom: 1px solid transparent;
+}
+.nav.is-scrolled { background: color-mix(in srgb, var(--void) 72%, transparent); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom-color: var(--hair); }
+.nav__mark { font-family: var(--serif); font-size: 1.5rem; letter-spacing: -0.01em; text-decoration: none; }
+.nav__links { display: flex; align-items: center; gap: clamp(16px, 2.4vw, 36px); }
+.nav__links a { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; color: var(--ink-2); transition: color var(--t-fast); }
+.nav__links a:hover, .nav__links a.is-current { color: var(--ink); }
+.nav__links a.is-current { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 6px; }
+.nav__cta { border: 1px solid var(--hair-2); border-radius: 999px; padding: 0.5em 1.1em; }
+.nav__toggle { display: none; background: transparent; border: 1px solid var(--hair-2); border-radius: 999px; padding: 0.5em 1.1em; font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; }
+.nav__sheet { position: fixed; inset: 0; z-index: 49; background: color-mix(in srgb, var(--void) 94%, transparent); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); display: flex; flex-direction: column; justify-content: center; padding: 96px var(--gutter) 48px; gap: 6px; }
+.nav__sheet[hidden] { display: none; }
+.nav__sheet a { font-family: var(--serif); font-size: clamp(2.4rem, 11vw, 4rem); line-height: 1.1; text-decoration: none; color: var(--ink); }
+.nav__sheet a:hover { color: var(--accent); }
+@media (max-width: 860px) {
+  .nav__links { display: none; }
+  .nav__toggle { display: inline-flex; }
+}
+.foot { padding: 64px var(--gutter) 48px; border-top: 1px solid var(--hair); }

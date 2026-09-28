@@ -5,3 +5,4 @@ dist
 .scratch
 screenshots/*
 !screenshots/.gitkeep
+provenance-out/

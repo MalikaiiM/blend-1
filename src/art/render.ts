@@ -88,7 +88,7 @@ function tonedPalette(traits: Traits, tl: Timeline) {
   return { pal: out as LayerCtx['pal'], dim, sat };
 }
 
-export function renderPiece(seed: string, state: PieceState, w: number, h: number, opts: RenderOpts = {}): Piece {
+function* pieceSteps(seed: string, state: PieceState, w: number, h: number, opts: RenderOpts): Generator<string, Piece, void> {
   const t0 = performance.now();
   const quality = opts.quality ?? 'full';
   const { tl, traits } = resolvePiece(seed, state);
@@ -141,11 +141,40 @@ export function renderPiece(seed: string, state: PieceState, w: number, h: numbe
       console.error(`[halocline] layer "${id}" failed`, e);
     }
     timings[id] = Math.round(performance.now() - t);
+    yield id;
   }
   return {
     seed, state, traits, tl, lay, w, h, quality, base: pal.void,
     layers, ms: Math.round(performance.now() - t0), timings, errors,
   };
+}
+
+/** Synchronous render: every layer, then the Piece. */
+export function renderPiece(seed: string, state: PieceState, w: number, h: number, opts: RenderOpts = {}): Piece {
+  const it = pieceSteps(seed, state, w, h, opts);
+  let r = it.next();
+  while (!r.done) r = it.next();
+  return r.value;
+}
+
+const nextFrame = () => new Promise<void>((res) => (typeof requestAnimationFrame === 'function' ? requestAnimationFrame(() => res()) : setTimeout(res, 0)));
+
+/**
+ * Cooperative render for the site: yields to the browser between layers so a big render never freezes
+ * scrolling. Pass `cancel` to abandon a render that is no longer wanted (resolves to null).
+ */
+export async function renderPieceAsync(
+  seed: string, state: PieceState, w: number, h: number,
+  opts: RenderOpts = {}, cancel?: { cancelled: boolean }, pause: () => Promise<void> = nextFrame,
+): Promise<Piece | null> {
+  const it = pieceSteps(seed, state, w, h, opts);
+  let r = it.next();
+  while (!r.done) {
+    await pause();
+    if (cancel?.cancelled) return null;
+    r = it.next();
+  }
+  return r.value;
 }
 
 export interface Motion {

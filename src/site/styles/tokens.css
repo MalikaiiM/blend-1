@@ -1,0 +1,53 @@
+/* Design tokens. Colour is taken only from the art's palettes. */
+:root {
+  color-scheme: dark;
+
+  --void: #05060b;
+  --void-2: #0a0c14;
+  --void-3: #10131d;
+  --ink: #ece7dc;
+  --ink-2: #cbc6ba;
+  --mute: #8f8a7e;
+  --faint: #5f5c53;
+  --hair: rgba(236, 231, 220, 0.12);
+  --hair-2: rgba(236, 231, 220, 0.24);
+
+  /* palette accents (from src/art/params.ts) */
+  --ember: #ff8a50;
+  --verdigris: #6fd4b4;
+  --cobalt: #86aeff;
+  --rose: #ff9fc4;
+  --saffron: #ffcf55;
+  --orchid: #cf88ff;
+  --glacier: #8fe3ff;
+  --accent: var(--verdigris);
+
+  --serif: 'Instrument Serif', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --mono: 'DM Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --gutter: clamp(16px, 4vw, 48px);
+  --maxw: 1440px;
+  --measure: 62ch;
+  --section-pad: clamp(96px, 14vw, 200px);
+  --nav-h: 64px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --t-slow: 900ms;
+  --t-med: 420ms;
+  --t-fast: 180ms;
+
+  --fs-display: clamp(3.5rem, 12vw, 10.5rem);
+  --fs-h2: clamp(2.5rem, 6.2vw, 4.75rem);
+  --fs-h3: clamp(1.6rem, 3vw, 2.4rem);
+  --fs-lede: clamp(1.35rem, 2.2vw, 1.85rem);
+  --fs-body: clamp(1.15rem, 1.5vw, 1.375rem);
+  --fs-label: 0.72rem;
+}
+
+[data-accent='ember'] { --accent: var(--ember); }
+[data-accent='verdigris'] { --accent: var(--verdigris); }
+[data-accent='cobalt'] { --accent: var(--cobalt); }
+[data-accent='rose'] { --accent: var(--rose); }
+[data-accent='saffron'] { --accent: var(--saffron); }
+[data-accent='orchid'] { --accent: var(--orchid); }
+[data-accent='glacier'] { --accent: var(--glacier); }

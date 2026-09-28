@@ -81,6 +81,22 @@ export function commitmentOf(artistSalt: string): string {
   return keccakHex(artistSalt);
 }
 
+/**
+ * Provenance: keccak256 of the packed 512 seeds in order (bytes32 each). Committed before mint.
+ *   seedForToken(seeds, startOffset, tokenId) = seeds[(tokenId + startOffset) % seeds.length]
+ * startOffset is fixed once, after mint-out, from a future blockhash — so ids are minted blind.
+ */
+export function provenanceHash(seeds: string[]): string {
+  return keccakHex(...seeds);
+}
+export function seedForToken(seeds: string[], startOffset: number, tokenId: number): string {
+  return seeds[(tokenId + startOffset) % seeds.length]!;
+}
+/** startOffset = uint256(keccak256(abi.encodePacked(blockhash(offsetBlock), "offset"))) % edition */
+export function startOffsetOf(blockhash: string, edition: number): number {
+  return Number(BigInt('0x' + keccakHex(blockhash, 'offset')) % BigInt(edition));
+}
+
 export const REVEAL = REVEAL_BLOCK;
 export const TURN_CLOSE = TURN_CLOSE_BLOCK;
 

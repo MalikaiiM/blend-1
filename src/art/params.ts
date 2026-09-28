@@ -218,18 +218,30 @@ const P = {
 
   /** Rarity tiers by information score (Σ −ln share); cutoffs tuned by the audit. */
   rarity: {
-    tierCutoffs: { uncommon: 13.0, rare: 15.0, epic: 17.2, mythic: 19.5 },
+    tierCutoffs: { uncommon: 17.8, rare: 19.6, epic: 21.2, mythic: 22.6 },
     /** per-trait tier by share of the edition */
     shareTiers: { uncommon: 0.25, rare: 0.1, epic: 0.04, mythic: 0.01 },
   },
 
-  /** What "weak" means. The pixel audit fails any render outside these bounds. */
+  /**
+   * What "weak" means. The pixel audit (npm run audit:pixels) renders each seed small and fails any
+   * that fall outside these bounds; tune the generator until 1,000 seeds pass.
+   */
   quality: {
-    meanLum: [0.09, 0.5],
-    lumStd: [0.09, 0.4],
+    meanLum: [0.08, 0.5],
+    lumStd: [0.08, 0.4],
     colorfulness: [0.06, 0.6],
-    litCoverage: [0.035, 0.7],
-    bloomNormalisedRadius: [0.18, 0.5],
+    litCoverage: [0.03, 0.7],
+    /** the bloom core must stand clear of the average frame */
+    bloomContrast: [0.08, 1],
+    /** mean |ΔL| per pixel — too low is flat/blurry, too high is noise */
+    edgeEnergy: [0.003, 0.09],
+    darkClipMax: 0.6,
+    whiteClipMax: 0.2,
+    /** distinct hues carrying ≥ 6 % of the chromatic pixels (12 bins) — Blackglass may be 1 */
+    hueBinsMin: 1,
+    /** two pieces closer than this (RGB distance of 16×20 thumbnails, 0..1 scale ×√(960)) count as near-duplicates */
+    nearDuplicate: 0.9,
   },
 
   /** Voice and names shared by the art, the explainer and the story. */

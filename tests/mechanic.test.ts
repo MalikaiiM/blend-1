@@ -66,3 +66,19 @@ test('rules read numbers from PARAMS', () => {
   assert.ok(rules.length >= 6);
   assert.ok(rules.some((r) => r.body.includes('201,600')));
 });
+
+test('provenance + blind assignment', async () => {
+  const { provenanceHash, seedForToken, startOffsetOf } = await import('../src/art/mechanic.ts');
+  const seeds = Array.from({ length: 512 }, (_, i) => seedFromText('p' + i));
+  const h = provenanceHash(seeds);
+  assert.match(h, /^[0-9a-f]{64}$/);
+  assert.equal(h, provenanceHash(seeds));
+  assert.notEqual(h, provenanceHash([...seeds.slice(1), seeds[0]!])); // order matters
+  const off = startOffsetOf(HASH, 512);
+  assert.ok(off >= 0 && off < 512);
+  assert.equal(seedForToken(seeds, off, 0), seeds[off]);
+  assert.equal(seedForToken(seeds, off, 511), seeds[(511 + off) % 512]);
+  // every seed is assigned exactly once
+  const set = new Set(Array.from({ length: 512 }, (_, id) => seedForToken(seeds, off, id)));
+  assert.equal(set.size, 512);
+});

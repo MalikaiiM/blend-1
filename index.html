@@ -2,10 +2,53 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Halocline</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Halocline — five hundred and twelve seeds from the Glass Sea</title>
+<meta name="description" content="Halocline is a generative art drop of 512 seeds that grow for four tides on the block clock, then bloom on the reveal date — turned toward a horizon by the hand that keeps them." />
+<meta name="theme-color" content="#05060b" />
+<meta property="og:title" content="Halocline" />
+<meta property="og:description" content="512 seeds from the Glass Sea. They grow for four tides. They bloom toward the horizon their keeper chose." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>html{background:#05060b;color:#ece7dc}body{margin:0}</style>
+<script type="module" src="/src/site/main.ts"></script>
 </head>
 <body>
-<p>Halocline — site under construction.</p>
+<a class="skip" href="#story">Skip to the story</a>
+
+<header class="nav" id="nav">
+  <a class="nav__mark" href="#hero" aria-label="Halocline — top">Halocline</a>
+  <nav class="nav__links" aria-label="Sections">
+    <a href="#story">Story</a>
+    <a href="#made">How it’s made</a>
+    <a href="#mechanic">The mechanic</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#mint" class="nav__cta">Mint</a>
+  </nav>
+  <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navSheet"><span>Menu</span></button>
+</header>
+<div class="nav__sheet" id="navSheet" hidden>
+  <a href="#story">Story</a>
+  <a href="#made">How it’s made</a>
+  <a href="#mechanic">The mechanic</a>
+  <a href="#gallery">Gallery</a>
+  <a href="#timeline">Timeline</a>
+  <a href="#mint">Mint</a>
+</div>
+
+<main id="top">
+  <section id="hero" class="section section--hero" data-section="hero" aria-label="Halocline">
+    <h1 class="hero__title visually-hidden">Halocline</h1>
+  </section>
+  <section id="story" class="section" data-section="story" data-accent="verdigris" aria-label="The story"></section>
+  <section id="made" class="section" data-section="made" data-accent="cobalt" aria-label="How it’s made"></section>
+  <section id="mechanic" class="section" data-section="mechanic" data-accent="ember" aria-label="The mechanic"></section>
+  <section id="gallery" class="section" data-section="gallery" data-accent="rose" aria-label="Gallery"></section>
+  <section id="timeline" class="section" data-section="timeline" data-accent="saffron" aria-label="Reveal timeline"></section>
+  <section id="mint" class="section" data-section="mint" data-accent="orchid" aria-label="Mint"></section>
+</main>
+
+<footer class="foot" data-section="footer"></footer>
 </body>
 </html>

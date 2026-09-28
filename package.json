@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Halocline — a generative art drop that grows on the block clock and blooms by the hand of its keeper.",
+  "description": "Halocline \u2014 a generative art drop that grows on the block clock and blooms by the hand of its keeper.",
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port 5173",
     "build": "tsc --noEmit && vite build",
@@ -11,8 +11,11 @@
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
     "audit:traits": "tsx scripts/audit-traits.ts",
-    "audit:pixels": "node scripts/audit-pixels.mjs",
-    "shoot": "node scripts/shoot.mjs"
+    "audit:pixels": "tsx scripts/audit-pixels.ts",
+    "shoot": "node scripts/shoot.mjs",
+    "provenance": "tsx scripts/provenance.ts",
+    "render:canonical": "node scripts/render-canonical.mjs",
+    "test:determinism": "node scripts/determinism.mjs"
   },
   "devDependencies": {
     "@types/node": "^26.6.3",

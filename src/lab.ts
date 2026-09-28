@@ -2,10 +2,11 @@
 //   /lab.html?seed=…&stage=bloomed|seed|tide1…|block=N&horizon=0..3|dawn…&sky=…&w=800&h=1000&only=abyss,strata&quality=draft
 // Automation talks to `window.__lab` (see scripts/lab.mjs).
 
+import { measure } from './art/metrics.ts';
 import {
   PARAMS, STAGES, REVEAL_BLOCK, BLOOM_END_BLOCK, GROWTH_BLOCKS, LAYER_ORDER, composite, deriveTraits,
   makeCanvas, normalizeSeed, randomSeed, renderPiece, resolvePiece, seedFromText, setParam, resetParams, rehearsalSky,
-  timeline, type Piece, type PieceState, type RenderOpts, type StageName,
+  timeline, skyOf, type Piece, type PieceState, type RenderOpts, type StageName,
 } from './art/index.ts';
 
 export interface Spec {
@@ -69,6 +70,26 @@ const lab = {
     const p = build(spec);
     return { url: flat(p, spec.solo).toDataURL('image/png'), info: summary(p) };
   },
+  /** Pixel metrics for the quality audit (see src/art/metrics.ts). */
+  metrics(spec: Spec) {
+    const p = build(spec);
+    const cv = flat(p);
+    const d = cv.getContext('2d')!.getImageData(0, 0, cv.width, cv.height);
+    const m = measure(d.data, cv.width, cv.height, { x: p.lay.cx, y: p.lay.cy, r: p.lay.unit * 0.12 });
+    return { m, ms: p.ms, errors: p.errors, traits: p.traits.list.map((e) => [e.key, e.value]), tier: p.traits.tier, score: p.traits.score, horizon: p.traits.horizon.index, title: p.traits.title, bloomR: p.lay.R / p.lay.unit };
+  },
+  /** 8×10 average-colour thumbnail (0..1) — used to compare draft vs full composition. */
+  tiny(spec: Spec) {
+    const p = build(spec);
+    const cv = flat(p);
+    const t = makeCanvas(8, 10);
+    const g = t.getContext('2d')!;
+    g.imageSmoothingQuality = 'high';
+    g.drawImage(cv, 0, 0, 8, 10);
+    return Array.from(g.getImageData(0, 0, 8, 10).data).filter((_, i) => i % 4 !== 3).map((v) => v / 255);
+  },
+  PARAMS,
+  skyOf,
   /** Every layer alone, over black (or over a checker for transparency), for close inspection. */
   layers(spec: Spec) {
     const p = build(spec);
