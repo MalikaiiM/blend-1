@@ -77,7 +77,7 @@ All block numbers above are counted from `openBlock`.
 ### 0.4 Go/no-go gates at a glance
 | Gate | By | Passes when |
 |---|---|---|
-| **G1** | Wed 21 Oct (T-22) | Art frozen and tagged; `npm test`, audits green; repo tasks done (§2.1); chain note written; secrets stored; site preview passes |
+| **G1** | Wed 21 Oct (T-22) | Art frozen and tagged; `npm test`, audits green; repo tasks done (§2.1); chain note written; spec approved (T-27); secrets stored; site preview passes |
 | **G2** | Wed 28 Oct (T-15) | Signed spec implemented; every §3 test passes; review has no open High or Medium finding |
 | **G3** | Wed 28 Oct (T-15) | Testnet rehearsal #1 completed, every function exercised, including the missed-window and missed-deadline paths |
 | **G4** | Thu 29 Oct (T-14) | Production contract deployed and source-verified; provenance and code hashes on chain and recomputed by two people |
@@ -673,7 +673,7 @@ Rows from T+7 on are tied to blocks: send them by hand when the head reaches the
 | W+2 | T+14 Thu 26 Nov | X, newsletter | A10 | Tide II ends: The Sheets; Turn reminder 1 | **[YOU]** |
 | W+3 | T+21 Thu 3 Dec | X, newsletter | A10, A7 | Tide III ends: The Threads; Turn reminder 2 | **[YOU]** |
 | W+3 | T+25 Mon 7 Dec | X, Discord | A6 | Three days to the Still Hour | **[YOU]** |
-| W+4 | T+27 Wed 9 Dec | X, Discord, newsletter | A7 | Turning closes tomorrow; block and time in six zones | **[YOU]** |
+| W+4 | T+27 Wed 9 Dec | X, Discord, newsletter | A7 | Turning closes tomorrow; block and time in six zones; the call-out for `recordSky()` watchers | **[YOU]** |
 | W+4 | T+28 Thu 10 Dec | X (five fixed lines and up to four bloom-watch posts; late-path and fallback lines never capped) | A6 | Reveal-day lines (§2.11) | **[YOU]** |
 | W+4 | T+29 Fri 11 Dec | X, newsletter, site | A11 | The blooms; verification write-up | **[YOU]** |
 | W+4 | T+30 Sat 12 Dec | X, Discord | text | Thanks; a short retrospective | **[YOU]** |

@@ -82,3 +82,29 @@ test('provenance + blind assignment', async () => {
   const set = new Set(Array.from({ length: 512 }, (_, id) => seedForToken(seeds, off, id)));
   assert.equal(set.size, 512);
 });
+
+test('pinned vectors — a Solidity port must reproduce these bit for bit', async () => {
+  const { provenanceHash, seedForToken, startOffsetOf, nativeHorizon, skyOf, bloomSeed, commitmentOf } = await import('../src/art/mechanic.ts');
+  // keccak-256 (not SHA3-256): the empty-string vector everyone knows
+  assert.equal(keccakHex(new Uint8Array(0) as any), 'c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470');
+  const SEED = '45e40c795fecc25c32d9663e5f445a28db75858bd17f086b6f32bb7de7f03c9a';
+  const SALT = '71a37a36ac4076f32aa7b4492186198029cee6514878d033ee362ddef6d03b1d';
+  const BH = 'b6db806c7bf11117c048fca5fce39e8f22caa9aabffbcca34a7c1c1bfcf9c2ff';
+  assert.equal(SEED, seedFromText('halocline-vector-1'));
+  assert.equal(nativeHorizon(SEED), 0);
+  assert.equal(commitmentOf(SALT), '726a6e39d8663e05752461810471a2e260e1423e0751097d7747e050b50eed9c');
+  const sky = skyOf(SALT, BH, 7);
+  assert.equal(sky, '6672a0b277d3af29f7f2b5567cf8672e4ba6591ae9af4056271da63306a512c5');
+  assert.equal(bloomSeed(SEED, 0, sky), '65be6f360c1d394498c66ecb59312344be42ee3dc6b895ac922a87e1827b3ac5');
+  assert.equal(bloomSeed(SEED, 3, sky), 'bfbbf18b1f801e42f4e4ac8eba52569fec492fc99210982bc90199b93e3ffe48');
+  // startOffset = uint256(keccak256(blockhash ‖ "offset")) % 512  (keccak = c766…4599 → low 9 bits 0x199)
+  assert.equal(keccakHex(BH, 'offset'), 'c76619314dc0eaaf8109aec5464b3885ca54032d098abdf04394e96f979e4599');
+  assert.equal(startOffsetOf(BH, 512), 409);
+  const seeds = Array.from({ length: 512 }, (_, i) => seedFromText('p' + i));
+  assert.equal(provenanceHash(seeds), 'fb2a9e0e09c82f30410de938327ce1b2a68f2f0941c1cc2260eee1eacb69b3ef');
+  assert.equal(seeds[0], 'fe1703dbe8a9115ed486af41105cac12e260e614269d85a2a0effad6af6dbdc6');
+  assert.equal(seedForToken(seeds, 409, 0), seeds[409]);
+  assert.equal(seedForToken(seeds, 409, 103), seeds[0]); // (103 + 409) % 512 = 0
+  assert.equal(seedForToken(seeds, 0, 511), seeds[511]);
+  assert.equal(seedForToken(seeds, 1, 511), seeds[0]);
+});
