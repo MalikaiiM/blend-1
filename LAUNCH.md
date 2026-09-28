@@ -250,7 +250,7 @@ Phases: 2.1 T-30…T-22 · 2.2 T-21…T-15 · 2.3 T-14 · 2.4 T-14…T-8 · 2.5 
 - [ ] **[TEAM]** Test on a phone and a desktop: all seven sections, hero click, simulator scrub and turn, gallery filters and 24 detail views, reduced-motion, keyboard focus, load speed.
 - [ ] **[TEAM]** Confirm no wallet code: `grep -rn "window.ethereum\|walletconnect\|eth_requestAccounts" src dist` returns nothing. The Mint button stays disabled with its honest note.
 - [ ] **[TEAM]** Add to the gallery: "Gallery seeds are examples of the system, not tokens of the edition."
-- [ ] **[TEAM]** Before the first public deploy, replace the mint date, price, cap and window shown by the Mint and Timeline sections (from `PARAMS.drop`) with "announced 5 Nov". Keep block numbers and the rules; they do not depend on price. At T-7 set the real values and run the §2.6 comparison.
+- [ ] **[TEAM]** Before the first public deploy, replace the mint date, price, cap and window shown by the Mint and Timeline sections (the values live in `PARAMS.drop`) with "announced 5 Nov". Keep block numbers and the rules; they do not depend on price. At T-7 set the real values and run the §2.6 comparison.
 - [ ] **[YOU]** Pay for domain and hosting; deploy behind a password or unlisted URL.
 
 **Days 3–9 · Legal, tax, terms** (placeholders; not legal advice)
@@ -710,7 +710,7 @@ Commitment one, on chain before the mint: seeds <PROVENANCE_HASH>, code <CODE_HA
 [image: A8 commitment card 1, provenance and code]
 
 7
-Commitment two. The artist's salt is committed by hash before the mint: <SALT_COMMITMENT>. The salt stays secret until the reveal block has passed, so nobody can steer the sky by knowing it.
+Commitment two. The artist's salt is committed by hash before the mint: <SALT_COMMITMENT>. The salt stays secret until the reveal block has passed, so no block builder can aim at it.
 [image: A8 commitment card 2, salt]
 
 8
@@ -964,7 +964,7 @@ Every post in the §5.3 calendar is **[YOU]**. *Verify before each:* lint clean 
 - [ ] **[YOU]** Pay counsel and form or pay for the legal entity. *Verify:* the scope covers §2.1 legal questions. *Not:* an open-ended retainer.
 - [ ] **[YOU]** Deploy the private preview. *Verify:* password or unlisted; no wallet code (§2.1). *Not:* a public link.
 - [ ] **[YOU]** Create the comms accounts, including the newsletter sign-up page, and secure them; lock the domain. *Verify:* hardware-key 2FA, recovery codes offline. *Not:* codes in a notes app.
-- [ ] **[YOU]** Pay the review or audit deposit. *Verify:* scope names the contract commit and this surface. *Not:* an open-ended scope.
+- [ ] **[YOU]** Pay the review or audit deposit, and the balance on delivery. *Verify:* scope names the contract commit and this surface. *Not:* an open-ended scope.
 - [ ] **[YOU]** Prepare the offline machine, then generate and store the master secret and salt. *Verify:* offline machine, history off, two copies, two hashes match. *Not:* any cloud, photo or chat.
 - [ ] **[YOU]** T-28: post the text-only note. *Verify:* no art, no dates, no price. *Not:* a sign-up page that collects more than an email.
 
@@ -1014,7 +1014,7 @@ Every post in the §5.3 calendar is **[YOU]**. *Verify before each:* lint clean 
 - [ ] **[YOU]** Post the T+2 call for keepers and the first look at those who replied, the T+3 walkthrough, and the tide post (T+7). *Verify:* block numbers, written consent. *Not:* price talk, or a keeper who did not reply.
 
 **T+7…T+27 · Tides II and III**
-- [ ] **[YOU]** Pin, `setStageURIs` and refresh at T+14 and T+21. *Same checks.*
+- [ ] **[YOU]** Pin, `setStageURIs`, refresh and post the tide note at T+14 and T+21. *Same checks.*
 - [ ] **[YOU]** Turn reminders (T+14, T+21, T+25, T+27), sent by hand at the block. *Verify:* block and time. *Not:* "last chance" pressure.
 - [ ] **[YOU]** Answer questions and run office hours, or name a moderator with a written brief. *Verify:* Rule P. *Not:* any word about price.
 - [ ] **[YOU]** Mid-period restore drill of the salt backup, offline. *Verify:* the hash matches. *Not:* leave the salt on any online machine.

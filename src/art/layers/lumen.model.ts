@@ -4,7 +4,7 @@
 import type { LayerCtx } from './types.ts';
 import type { lumenParams } from './lumen.params.ts';
 import { adjust, mix, type RGB } from '../color.ts';
-import { angDiff, clamp, DEG, lerp, smootherstep, smoothstep, TAU } from '../math.ts';
+import { angDiff, clamp, DEG, lerp, smoothstep, TAU } from '../math.ts';
 import type { FormKind } from '../traits.ts';
 
 export type LP = typeof lumenParams;

@@ -49,10 +49,10 @@ export const lumenParams = {
 
   /** the fan for each horizon: petal length = R·lengthOuter·(base + peak·cos(u·π/2)^pow)·skew·alt */
   horizon: {
-    dawn: { base: 0.6, peak: 0.4, pow: 1.15, skew: 0.0, alt: 0.0, noise: 0.0, bow: 0.05, bowU: 0.11, halo: 0.34, streakY: 0 },
-    dusk: { base: 0.5, peak: 0.5, pow: 1.3, skew: 0.3, alt: 0.05, noise: 0.0, bow: 0.15, bowU: 0.05, halo: 0.3, streakY: 0 },
-    zenith: { base: 0.44, peak: 0.56, pow: 0.8, skew: 0.0, alt: 0.3, noise: 0.0, bow: -0.01, bowU: -0.07, halo: 0.36, streakY: 0 },
-    nadir: { base: 0.82, peak: 0.18, pow: 1.0, skew: 0.0, alt: 0.0, noise: 0.24, bow: 0.11, bowU: 0.0, halo: 0.0, streakY: 0 },
+    dawn: { base: 0.6, peak: 0.4, pow: 1.15, skew: 0.0, alt: 0.0, noise: 0.0, bow: 0.05, bowU: 0.11, halo: 0.34 },
+    dusk: { base: 0.5, peak: 0.5, pow: 1.3, skew: 0.3, alt: 0.05, noise: 0.0, bow: 0.15, bowU: 0.05, halo: 0.3 },
+    zenith: { base: 0.44, peak: 0.56, pow: 0.8, skew: 0.0, alt: 0.3, noise: 0.0, bow: -0.01, bowU: -0.07, halo: 0.36 },
+    nadir: { base: 0.82, peak: 0.18, pow: 1.0, skew: 0.0, alt: 0.0, noise: 0.24, bow: 0.11, bowU: 0.0, halo: 0.0 },
   },
 
   /** petal silhouettes. aspect = half-width / length; sM = where the belly is; ra/rb/tp shape the rise, the fall and the tip */
@@ -109,10 +109,10 @@ export const lumenParams = {
 
   /** the four light classes (traits.bloom.light) */
   light: {
-    lamp: { core: 0.062, coreGlow: 3.0, halo: 1.05, haloA: 0.36, glare: 0.42, rays: 15, rayLen: [0.9, 1.5], rayA: [0.05, 0.1], shafts: 0, streak: 0, ghosts: 0 },
-    radiant: { core: 0.074, coreGlow: 3.3, halo: 1.5, haloA: 0.46, glare: 0.58, rays: 30, rayLen: [1.1, 2.4], rayA: [0.06, 0.14], shafts: 3, streak: 0, ghosts: 0 },
-    blazing: { core: 0.098, coreGlow: 3.7, halo: 1.75, haloA: 0.54, glare: 0.62, rays: 34, rayLen: [1.2, 2.6], rayA: [0.08, 0.16], shafts: 4, streak: 0.6, ghosts: 0 },
-    nova: { core: 0.12, coreGlow: 3.7, halo: 2.05, haloA: 0.6, glare: 0.72, rays: 44, rayLen: [1.4, 3.0], rayA: [0.09, 0.18], shafts: 6, streak: 1.0, ghosts: 5 },
+    lamp: { core: 0.062, coreGlow: 3.0, halo: 1.05, haloA: 0.36, glare: 0.42, rays: 15, rayLen: [0.9, 1.5], rayA: [0.05, 0.1], shafts: 0, streak: 0, ghosts: 0, ring: 0 },
+    radiant: { core: 0.074, coreGlow: 3.3, halo: 1.5, haloA: 0.46, glare: 0.58, rays: 30, rayLen: [1.1, 2.4], rayA: [0.06, 0.14], shafts: 3, streak: 0, ghosts: 0, ring: 0 },
+    blazing: { core: 0.098, coreGlow: 3.7, halo: 1.75, haloA: 0.54, glare: 0.62, rays: 34, rayLen: [1.2, 2.6], rayA: [0.08, 0.16], shafts: 4, streak: 0.6, ghosts: 0, ring: 0.5 },
+    nova: { core: 0.12, coreGlow: 3.7, halo: 2.05, haloA: 0.6, glare: 0.72, rays: 44, rayLen: [1.4, 3.0], rayA: [0.09, 0.18], shafts: 6, streak: 1.0, ghosts: 5, ring: 1 },
   },
 
   /** rays: angular half-width in degrees for hairlines and broad shafts */
@@ -137,8 +137,6 @@ export const lumenParams = {
     alpha: 0.3,
     glare: 0.3,
     coreShift: 0.2,
-    /** ring lengths, outer → inner */
-    ringLen: [1, 0.84, 0.66],
     petals: 7,
     rings: 3,
     core: 0.04,

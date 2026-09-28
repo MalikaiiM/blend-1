@@ -15,7 +15,7 @@ import {
   type Frame, type LP, type Petal,
 } from './lumen.model.ts';
 import {
-  glare, paintCore, paintGhosts, paintHalation, paintPearl, paintPearlRing, paintPetalBody, paintPetalLines, paintRays,
+  glare, paintCore, paintCoreRing, paintGhosts, paintHalation, paintPearl, paintPearlRing, paintPetalBody, paintPetalLines, paintRays,
   paintStreak, paintWeb, styleOf,
   type GlassK, type Paint, type PetalPaint, type Ray, type Style,
 } from './lumen.paint.ts';
@@ -262,6 +262,7 @@ function drawOpen(g: CanvasRenderingContext2D, c: LayerCtx, F: Frame, o: BloomOp
   paintCore(P, hx, hy, rc, cls.coreGlow, kx);
 
   // 6 · lens artefacts
+  paintCoreRing(P, hx, hy, rc, cls.ring * gateFx * kx);
   paintStreak(P, F.cx, F.cy, F.R, cls.streak * gateFx * kx);
   paintGhosts(P, F.cx, F.cy, F.R, F.axis + F.rotation, cls.ghosts, gateFx * kx);
 }

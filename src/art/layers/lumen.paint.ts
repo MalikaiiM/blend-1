@@ -3,7 +3,7 @@
 
 import type { LayerCtx } from './types.ts';
 import { adjust, css, mix, type RGB } from '../color.ts';
-import { clamp, DEG, lerp, TAU } from '../math.ts';
+import { clamp, TAU } from '../math.ts';
 import type { Frame, LP, Outline, Pal, Pose } from './lumen.model.ts';
 
 export interface GlassK { body: number; edge: number; disp: number; soft: number; glare: number }
@@ -531,4 +531,20 @@ export function paintPearlRing(P: Paint, count: number, radius: number, a: numbe
     const big = i % 2 === 0;
     paintPearl(P, F.cx + Math.cos(ang) * radius, F.cy + Math.sin(ang) * radius, LPar.coronet.pearlPx * F.S * (big ? 1.25 : 0.8), a * (big ? 1 : 0.7));
   }
+}
+
+/** a thin lens-like corona ring around a blown-out core, so the highlight has an edge */
+export function paintCoreRing(P: Paint, x: number, y: number, rc: number, a: number) {
+  const { g, pal, F } = P;
+  if (a < 0.02) return;
+  const col = mix(pal.glass, pal.white, 0.55);
+  g.save();
+  for (const [k, px, al] of [[1.95, 7, 0.12], [1.95, 1.2, 0.5], [3.3, 1, 0.2]] as [number, number, number][]) {
+    g.lineWidth = px * F.S;
+    g.strokeStyle = css(k > 3 ? pal.glass : col, A(al * a));
+    g.beginPath();
+    g.arc(x, y, rc * k, 0, TAU);
+    g.stroke();
+  }
+  g.restore();
 }
