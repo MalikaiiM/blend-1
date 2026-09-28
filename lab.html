@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Halocline · Lab</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; background: #08090d; color: #cfd2da; font: 12px/1.5 ui-monospace, Menlo, monospace; }
+  #bar { display: flex; flex-wrap: wrap; gap: 8px 14px; padding: 10px 14px; border-bottom: 1px solid #1c1f28; align-items: center; }
+  #bar label { display: flex; gap: 6px; align-items: center; }
+  #bar input, #bar select { background: #10121a; color: #dfe2ea; border: 1px solid #262a36; padding: 3px 6px; font: inherit; }
+  #bar input[type=text] { width: 30em; }
+  #bar input[type=range] { width: 22em; }
+  #wrap { display: flex; gap: 16px; padding: 14px; align-items: flex-start; }
+  canvas { max-width: 70vw; max-height: 88vh; box-shadow: 0 0 0 1px #1c1f28; }
+  pre { margin: 0; white-space: pre-wrap; max-width: 28em; }
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="wrap"><canvas id="cv" width="800" height="1000"></canvas><pre id="info"></pre></div>
+<script type="module" src="/src/lab.ts"></script>
+</body>
+</html>
