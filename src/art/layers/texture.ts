@@ -1,28 +1,25 @@
-// STUB — replaced by the veil/texture agent. Grain, vignette and grade overlays.
+// THE GRAIN — the medium. Sub-pixel tooth that makes light look as if it passed through something.
+//
+// Three full-canvas overlays, pinned to the frame (parallax 0), drawn over everything else:
+//   grain     overlay     film grain (Fine · Silken · Coarse) that dithers the dark, faint glass tooth, hairline scratches
+//   vignette  multiply    a lopsided fall-off in the palette's own shade, leaning away from the light
+//   grade     soft-light  shadows → deep, highlights → bloomLight, a faint lift in the toe; Blackglass stays near-neutral
+//
+// All three read one low-res map of the luminance below (c.below()), so the grain is even from abyss to lamp and the grade
+// tints what is really there. Growth: heavier grain, cooler and flatter grade, a deeper vignette at the seed → settled at t=1.
+// Nothing here moves with time; it is all static once the seed, the traits and the growth are fixed.
 import type { LayerFn } from './types.ts';
-import { hash2 } from '../math.ts';
+import { lumaMap } from './texture.util.ts';
+import { renderGrain } from './texture.grain.ts';
+import { renderVignette } from './texture.vignette.ts';
+import { renderGrade } from './texture.grade.ts';
 
 export const render: LayerFn = (c) => {
   const T = c.P.layers.texture;
-  const grain = c.makeCanvas();
-  const g = grain.getContext('2d')!;
-  const id = g.createImageData(c.w, c.h);
-  for (let y = 0; y < c.h; y++) for (let x = 0; x < c.w; x++) {
-    const v = 128 + (hash2(x, y, 7) - 0.5) * 120;
-    const o = (y * c.w + x) * 4;
-    id.data[o] = id.data[o + 1] = id.data[o + 2] = v; id.data[o + 3] = 255;
-  }
-  g.putImageData(id, 0, 0);
-
-  const vig = c.makeCanvas();
-  const v = vig.getContext('2d')!;
-  const gr = v.createRadialGradient(c.w / 2, c.h / 2, c.lay.unit * 0.3, c.w / 2, c.h / 2, Math.hypot(c.w, c.h) / 2);
-  gr.addColorStop(0, 'rgba(255,255,255,1)');
-  gr.addColorStop(1, `rgba(${255 * (1 - T.vignette.strength)},${255 * (1 - T.vignette.strength)},${255 * (1 - T.vignette.strength)},1)`);
-  v.fillStyle = gr;
-  v.fillRect(0, 0, c.w, c.h);
+  const map = lumaMap(c);
   return [
-    { id: 'grain', canvas: grain, ...T.grain.compose },
-    { id: 'vignette', canvas: vig, ...T.vignette.compose },
+    { id: 'grain', canvas: renderGrain(c, map), ...T.grain.compose },
+    { id: 'vignette', canvas: renderVignette(c), ...T.vignette.compose },
+    { id: 'grade', canvas: renderGrade(c, map), ...T.grade.compose },
   ];
 };
