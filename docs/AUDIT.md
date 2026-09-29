@@ -179,7 +179,7 @@ Current cutoffs ({"uncommon":17.8,"rare":19.6,"epic":21.2,"mythic":22.6}) give: 
 | darkClip | 0.003 | 0.025 | 0.111 | 0.228 | 0.325 | ≤ 0.5 |
 | whiteClip | 0.001 | 0.002 | 0.008 | 0.039 | 0.072 | ≤ 0.15 |
 | hueBins | 1.000 | 1.000 | 2.000 | 3.000 | 5.000 | ≥ 1 |
-| render ms @ 240×300 | 167 | 191 | 241 | 443 | 745 | — |
+| render ms @ 240×300 | 176 | 189 | 235 | 498 | 998 | — |
 
 **Weakest trait groups** (lowest mean quality rank; a group is worth a look if it is far below 0.5):
 

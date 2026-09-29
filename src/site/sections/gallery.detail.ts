@@ -72,11 +72,11 @@ export function createDetail(host: DetailHost) {
   const plate = el('figure', { class: 'gal-dlg__plate' }, frame, cap);
   const stageEl = el('div', { class: 'gal-dlg__stage' }, plate);
 
-  const eyebrow = el('p', { class: 'gal-dlg__eyebrow eyebrow' });
+  const eyebrow = el('p', { class: 'gal-dlg__eyebrow eyebrow', id: 'gal-dlg-no' });
   const tierChip = el('span', { class: 'tier' });
   const title = el('h2', { class: 'gal-dlg__title', id: 'gal-dlg-title' });
   const sub = el('p', { class: 'gal-dlg__sub caption' });
-  const head = el('header', { class: 'gal-dlg__head' }, el('div', { class: 'gal-dlg__meta' }, eyebrow, tierChip), title, sub);
+  const head = el('div', { class: 'gal-dlg__head' }, el('div', { class: 'gal-dlg__meta' }, eyebrow, tierChip), title, sub);
 
   const seedA = el('span', { class: 'gal-dlg__seed-a' });
   const seedB = el('span', { class: 'gal-dlg__seed-b' });
@@ -130,7 +130,7 @@ export function createDetail(host: DetailHost) {
   const dlg = el('div', { class: 'gal-dlg', dataset: { accent: 'rose' }, tabindex: '-1' }, scrim, bar, body);
   dlg.setAttribute('role', 'dialog');
   dlg.setAttribute('aria-modal', 'true');
-  dlg.setAttribute('aria-labelledby', 'gal-dlg-title');
+  dlg.setAttribute('aria-labelledby', 'gal-dlg-no gal-dlg-title');
   dlg.hidden = true;
 
   // Wide layouts keep the growth strip in the side panel. On a phone the plate and the panel stack, so the strip
@@ -153,7 +153,6 @@ export function createDetail(host: DetailHost) {
     const i = Math.max(0, list.indexOf(it));
     crumbNo.textContent = it.label;
     pos.textContent = `${String(i + 1).padStart(2, '0')} / ${String(list.length).padStart(2, '0')}`;
-    pos.setAttribute('aria-label', `${i + 1} of ${list.length}`);
     prevBtn.setAttribute('aria-disabled', String(i <= 0));
     nextBtn.setAttribute('aria-disabled', String(i >= list.length - 1));
 
