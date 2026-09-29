@@ -166,51 +166,35 @@ Current cutoffs ({"uncommon":17.8,"rare":19.6,"epic":21.2,"mythic":22.6}) give: 
 <!-- traits:end -->
 
 <!-- pixels-main:start -->
-### Pixels — 300 seeds (main set, stage `bloomed`, 240×300, horizons cycled)
+### Pixels — 200 seeds (main set, stage `bloomed`, 240×300, horizons cycled)
 
 | metric | min | p5 | median | p95 | max | gate |
 |---|---:|---:|---:|---:|---:|---|
-| meanLum | 0.221 | 0.301 | 0.383 | 0.464 | 0.529 | [0.08,0.5] |
-| lumStd | 0.178 | 0.217 | 0.278 | 0.319 | 0.345 | [0.08,0.4] |
-| colorfulness | 0.057 | 0.125 | 0.192 | 0.261 | 0.325 | [0.06,0.6] |
-| litCoverage | 0.158 | 0.236 | 0.365 | 0.475 | 0.550 | [0.03,0.7] |
-| bloomContrast | -0.364 | 0.337 | 0.469 | 0.579 | 0.663 | [0.08,1] |
-| edgeEnergy | 0.017 | 0.020 | 0.025 | 0.031 | 0.035 | [0.003,0.09] |
-| darkClip | 0.000 | 0.002 | 0.049 | 0.166 | 0.291 | ≤ 0.6 |
-| whiteClip | 0.001 | 0.004 | 0.027 | 0.094 | 0.171 | ≤ 0.2 |
-| hueBins | 0.000 | 1.000 | 2.000 | 3.000 | 6.000 | ≥ 1 |
-| render ms @ 240×300 | 164 | 183 | 225 | 356 | 551 | — |
+| meanLum | 0.155 | 0.207 | 0.265 | 0.325 | 0.371 | [0.11,0.42] |
+| lumStd | 0.157 | 0.189 | 0.244 | 0.288 | 0.314 | [0.11,0.38] |
+| colorfulness | 0.072 | 0.127 | 0.180 | 0.250 | 0.288 | [0.08,0.5] |
+| litCoverage | 0.091 | 0.123 | 0.214 | 0.305 | 0.356 | [0.05,0.48] |
+| bloomContrast | 0.465 | 0.542 | 0.665 | 0.748 | 0.782 | [0.38,1] |
+| edgeEnergy | 0.018 | 0.020 | 0.024 | 0.031 | 0.035 | [0.003,0.09] |
+| darkClip | 0.003 | 0.025 | 0.111 | 0.228 | 0.325 | ≤ 0.5 |
+| whiteClip | 0.001 | 0.002 | 0.008 | 0.039 | 0.072 | ≤ 0.15 |
+| hueBins | 1.000 | 1.000 | 2.000 | 3.000 | 5.000 | ≥ 1 |
+| render ms @ 240×300 | 167 | 191 | 241 | 443 | 745 | — |
 
 **Weakest trait groups** (lowest mean quality rank; a group is worth a look if it is far below 0.5):
 
 | trait = value | n | mean rank | fail rate |
 |---|---:|---:|---:|
-| palette = Blackglass | 8 | -0.142 vs mean | 37.5% |
-| palette = Verdigris Night | 37 | -0.133 vs mean | 5.4% |
-| palette = Ink Wisteria | 31 | -0.102 vs mean | 3.2% |
-| glass = Frosted | 79 | -0.094 vs mean | 5.1% |
-| inclusion = Halo Rings | 15 | -0.092 vs mean | 13.3% |
-| interface = Fan | 63 | -0.058 vs mean | 7.9% |
-| petals = 21 | 8 | -0.052 vs mean | 0.0% |
-| growth = Root | 71 | -0.050 vs mean | 2.8% |
+| palette = Verdigris Night | 23 | -0.109 vs mean | 0.0% |
+| inclusion = Halo Rings | 9 | -0.094 vs mean | 0.0% |
+| palette = Orchid Static | 13 | -0.090 vs mean | 0.0% |
+| palette = Ink Wisteria | 23 | -0.068 vs mean | 0.0% |
+| rings = 2 | 80 | -0.067 vs mean | 0.0% |
+| glass = Frosted | 54 | -0.062 vs mean | 0.0% |
+| light = Lamp | 83 | -0.048 vs mean | 0.0% |
+| growth = Root | 46 | -0.047 vs mean | 0.0% |
 
 ### Verdict
 
-**FAIL** — 13 of 300 renders are outside the gates; near-duplicates (thumbnail distance < 0.9): 0.
-
-| seed | horizon | why |
-|---|---|---|
-| `d3297d0d53f2…` (#12) | 0 | bloomContrast -0.328 |
-| `5bfdab8ab8b1…` (#33) | 1 | bloomContrast -0.213 |
-| `b5b0b62aa9e2…` (#59) | 3 | bloomContrast -0.106 |
-| `9a6622f2937f…` (#66) | 2 | bloomContrast -0.298 |
-| `bfd6445cd5ee…` (#87) | 3 | meanLum 0.529 |
-| `4b585f6478db…` (#90) | 2 | bloomContrast -0.329 |
-| `e1688ee0ee09…` (#115) | 3 | hueBins 0 |
-| `695952aeaec5…` (#124) | 0 | bloomContrast -0.297 |
-| `76f010161218…` (#156) | 0 | meanLum 0.525 |
-| `0cb1a461903e…` (#230) | 2 | hueBins 0 |
-| `963547f3b2cd…` (#257) | 1 | colorfulness 0.057; hueBins 0 |
-| `292c55cbce87…` (#290) | 2 | bloomContrast -0.364 |
-| `139bc8cb0ce8…` (#296) | 0 | meanLum 0.501 |
+**PASS** — all 200 renders are inside the gates; near-duplicates (thumbnail distance < 0.9): 0.
 <!-- pixels-main:end -->

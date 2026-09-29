@@ -6,6 +6,9 @@
   border-bottom: 1px solid transparent;
 }
 .nav.is-scrolled { background: color-mix(in srgb, var(--void) 72%, transparent); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom-color: var(--hair); }
+/* the huge hero title says the name already — the wordmark waits until you leave it */
+.nav.is-top .nav__mark { opacity: 0; pointer-events: none; }
+.nav__mark { transition: opacity var(--t-med) var(--ease); }
 .nav__mark { font-family: var(--serif); font-size: 1.5rem; letter-spacing: -0.01em; text-decoration: none; }
 .nav__links { display: flex; align-items: center; gap: clamp(16px, 2.4vw, 36px); }
 .nav__links a { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; color: var(--ink-2); transition: color var(--t-fast); }

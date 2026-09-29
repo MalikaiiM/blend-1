@@ -101,6 +101,36 @@ const P = {
     budAt0: 0.16,
   },
 
+  /**
+   * EXPOSURE — how bright the water is, in one place. A deep-sea piece needs real dark: a hot bloom against deep,
+   * coloured, dark water, like stained glass in a cathedral. The layers each carry their own levels; this block trims
+   * the PALETTE they draw from (render.ts tonedPalette): the lower roles (void deep mid glass, and the haze and colour
+   * walk built on them) are pulled down, `light` (the hottest parts of the bloom) and `spark` (the accent) never are.
+   */
+  exposure: {
+    /** multiplier on the OKLab lightness of every lower role (1 = the palette as authored) */
+    global: 1,
+    /** per-role lightness multipliers on top of `global` */
+    roles: { void: 1, deep: 1, mid: 1, glass: 1 } as Record<string, number>,
+    /**
+     * luminance-aware trim: sRGB luma (0..1) each lower role may keep in full. A role brighter than its cap is pulled
+     * toward it by lowering its lightness (hue and chroma kept): luma' = cap + (luma − cap)·keep. This is what tames the
+     * yellows and pale greens, whose glass is nearly white at the same OKLab lightness as a blue.
+     */
+    cap: { void: 1, deep: 0.14, mid: 0.36, glass: 0.68 } as Record<string, number>,
+    keep: 0.35,
+    /** hand trims per palette id: extra lightness multiplier on the lower roles (see PARAMS.palettes) */
+    byPalette: {
+      sulphur: 0.84, blackglass: 0.82, glacier: 0.9, aurora: 0.92, saffron: 0.93, anemone: 0.94, rose: 0.96,
+    } as Record<string, number>,
+    /** chroma multiplier on the lower roles — darker must never mean greyer */
+    chroma: 1.12,
+    /** …and per-palette extra chroma for the palettes whose canon is quiet (multiplies `chroma`) */
+    chromaByPalette: {
+      wisteria: 1.25, verdigris: 1.12, glacier: 1.12, rose: 1.1, anemone: 1.08,
+    } as Record<string, number>,
+  },
+
   horizons: [
     {
       id: 'dawn', name: 'Dawn', anchor: [0.5, 0.8], axisDeg: -90, spreadDeg: 210,
@@ -228,20 +258,23 @@ const P = {
    * that fall outside these bounds; tune the generator until 1,000 seeds pass.
    */
   quality: {
-    meanLum: [0.08, 0.5],
-    lumStd: [0.08, 0.4],
-    colorfulness: [0.06, 0.6],
-    litCoverage: [0.03, 0.7],
-    /** the bloom core must stand clear of the average frame */
-    bloomContrast: [0.25, 1],
+    // Bracketing the exposed distribution (200 seeds, bloomed: meanLum 0.155–0.371, median 0.265; lit 0.09–0.36; dark median 0.11).
+    // The bounds are tight enough to catch a washed-out piece (mean / lit too high, no bloom contrast) or a murky one (mean too low,
+    // flat value structure), and loose enough for the long tails of a 1,000-seed audit.
+    meanLum: [0.11, 0.42],
+    lumStd: [0.11, 0.38],
+    colorfulness: [0.08, 0.5],
+    litCoverage: [0.05, 0.48],
+    /** the bloom core must stand clear of the average frame (p95 luma near the anchor minus the mean) */
+    bloomContrast: [0.38, 1],
     /** mean |ΔL| per pixel — too low is flat/blurry, too high is noise */
     edgeEnergy: [0.003, 0.09],
-    darkClipMax: 0.6,
-    whiteClipMax: 0.2,
+    darkClipMax: 0.5,
+    whiteClipMax: 0.15,
     /** distinct hues carrying ≥ 6 % of the chromatic pixels (12 bins) — Blackglass may be 1 */
     hueBinsMin: 1,
     /** near-mono palettes (Blackglass) are judged on value structure, not hue */
-    mono: { palettes: ['blackglass'], colorfulness: [0.015, 0.6], hueBinsMin: 0 },
+    mono: { palettes: ['blackglass'], colorfulness: [0.03, 0.5], hueBinsMin: 0 },
     /** two pieces closer than this (RGB distance of 16×20 thumbnails, 0..1 scale ×√(960)) count as near-duplicates */
     nearDuplicate: 0.9,
   },

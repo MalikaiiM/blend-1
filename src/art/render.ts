@@ -5,7 +5,7 @@
 //   paint(canvas, seed, state)      → both, onto an existing canvas
 
 import { PARAMS } from './params.ts';
-import { adjust, css, mix, type RGB } from './color.ts';
+import { adjust, css, mix, oklchToRgb, rgbToOklch, type RGB } from './color.ts';
 import { clamp, lerp, smootherstep } from './math.ts';
 import { makeNoise } from './noise.ts';
 import { seedCtx } from './rng.ts';
@@ -69,14 +69,54 @@ export function resolvePiece(seed: string, st: PieceState) {
 
 const ROLE_DIM: Record<string, number> = { void: 0.55, deep: 1, mid: 1, glass: 1, light: 0.75, spark: 0.9 };
 
-function tonedPalette(traits: Traits, tl: Timeline) {
+const lumaOf = (c: RGB) => (0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]) / 255;
+
+/**
+ * PARAMS.exposure applied to one lower role: a lightness multiplier (global × role × palette), then the
+ * luminance-aware pull toward the role's luma cap, then the chroma trim. Hue is never touched.
+ */
+function trimLower(col: RGB, role: string, paletteId: string): RGB {
+  const X = PARAMS.exposure;
+  const k = X.global * (X.roles[role] ?? 1) * (X.byPalette[paletteId] ?? 1);
+  const [L0, C0, h] = rgbToOklch(col);
+  let L = L0 * k;
+  let C = C0 * X.chroma * (X.chromaByPalette[paletteId] ?? 1);
+  const cap = X.cap[role] ?? 1;
+  if (X.keep < 1) {
+    const y = lumaOf(oklchToRgb(L, C, h));
+    if (y > cap) {
+      // lower L until the luma reaches cap + (y − cap)·keep (luma rises monotonically with L: bisection)
+      const target = cap + (y - cap) * X.keep;
+      let lo = 0, hi = L;
+      for (let i = 0; i < 12; i++) {
+        const mid = (lo + hi) / 2;
+        if (lumaOf(oklchToRgb(mid, C, h)) > target) hi = mid; else lo = mid;
+      }
+      L = lo;
+    }
+  }
+  return oklchToRgb(L, C, h);
+}
+
+/** the palette as the layers see it: the lower roles trimmed for exposure (PARAMS.exposure), light and spark untouched */
+function exposedColors(traits: Traits) {
+  const src = traits.colors;
+  const id = src.id;
+  const c = { ...src.c };
+  for (const role of ['void', 'deep', 'mid', 'glass'] as const) c[role] = trimLower(src.c[role], role, id);
+  const haze = trimLower(src.haze, 'glass', id);
+  const walk = src.spectral ? src.walk : (t: number) => mix(c.mid, c.glass, clamp(t));
+  // spectral walks keep their own lightness (they are bright by construction); their chroma is what carries them
+  return { ...src, c, haze, walk } as Traits['colors'];
+}
+
+function tonedPalette(traits: Traits, tl: Timeline, src: Traits['colors']) {
   const G = PARAMS.growth;
   // tone keeps rising through all four tides (near-linear), so the last tide still visibly ignites
   const k = 0.35 * smootherstep(0, 1, tl.t) + 0.65 * tl.t;
   const dim = lerp(G.dimAt0, 1, k);
   const sat = lerp(G.satAt0, 1, k);
   const pulse = 1 + PARAMS.clock.pulseAmp * tl.pulse;
-  const src = traits.colors;
   const tone = (c: RGB, role: string) => {
     const l = lerp(1, dim, ROLE_DIM[role] ?? 1) * pulse;
     return adjust(c, { l, c: sat });
@@ -94,7 +134,8 @@ function* pieceSteps(seed: string, state: PieceState, w: number, h: number, opts
   const quality = opts.quality ?? 'full';
   const { tl, traits } = resolvePiece(seed, state);
   const lay = layout(traits, tl, w, h);
-  const { pal, dim, sat } = tonedPalette(traits, tl);
+  const full = exposedColors(traits);
+  const { pal, dim, sat } = tonedPalette(traits, tl, full);
   const sc = seedCtx(seed);
   const noiseCache = new Map<string, ReturnType<typeof makeNoise>>();
   const layers: LayerOut[] = [];
@@ -117,7 +158,7 @@ function* pieceSteps(seed: string, state: PieceState, w: number, h: number, opts
   const ctx: LayerCtx = {
     w, h, S: h / PARAMS.canvas.designHeight,
     quality, q: quality === 'draft' ? PARAMS.canvas.draftFactor : 1,
-    P: PARAMS, seed, traits, tl, lay, pal, full: traits.colors,
+    P: PARAMS, seed, traits, tl, lay, pal, full,
     tone: { dim, sat },
     grow: (name) => growthRamp(tl, name),
     rng: (label) => sc.stream(label),

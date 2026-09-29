@@ -28,7 +28,7 @@ for (let i = 2; i < process.argv.length; i++) {
 const url = args.url ?? process.env.SITE_URL ?? 'http://localhost:5173';
 const out = resolve(args.out ?? 'screenshots/shoot');
 const settle = Number(args.settle ?? 2600);
-const maxSlices = Number(args['max-slices'] ?? 9);
+const maxSlices = Number(args['max-slices'] ?? 14);
 const only = args.only ? args.only.split(',') : null;
 const SIZES = {
   desktop: { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 },
@@ -38,6 +38,16 @@ const sizes = (args.sizes ?? 'phone,desktop').split(',');
 
 mkdirSync(out, { recursive: true });
 writeFileSync(join(out, 'console.txt'), '');
+// Vite's HMR client reloads the page or shows an error overlay whenever any file changes — fatal when several people
+// edit at once. Screenshots stub it out (pass --hmr to keep it).
+const STUB = `
+const sheets = new Map();
+export function createHotContext() { return { accept() {}, dispose() {}, prune() {}, invalidate() {}, on() {}, send() {}, data: {} }; }
+export function updateStyle(id, css) { let s = sheets.get(id); if (!s) { s = document.createElement('style'); s.setAttribute('data-vite-dev-id', id); document.head.appendChild(s); sheets.set(id, s); } s.textContent = css; }
+export function removeStyle(id) { const s = sheets.get(id); if (s) { s.remove(); sheets.delete(id); } }
+export function injectQuery(u) { return u; }
+export const ErrorOverlay = class {};
+`;
 const browser = await chromium.launch();
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -46,6 +56,7 @@ for (const name of sizes) {
   const dir = join(out, name);
   mkdirSync(dir, { recursive: true });
   const ctx = await browser.newContext({ ...cfg, reducedMotion: args['reduced-motion'] ? 'reduce' : 'no-preference' });
+  if (!args.hmr) await ctx.route('**/@vite/client*', (r) => r.fulfill({ contentType: 'text/javascript', body: STUB }));
   const page = await ctx.newPage();
   const log = (line) => { console.log(line); appendFileSync(join(out, 'console.txt'), line + '\n'); };
   page.on('pageerror', (e) => log(`[${name}] pageerror: ${e.message}`));

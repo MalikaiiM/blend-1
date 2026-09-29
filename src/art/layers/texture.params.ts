@@ -117,11 +117,11 @@ export const textureParams = {
   vignette: {
     compose: { blend: 'multiply', alpha: 1, parallax: 0 } as Compose,
     /** 0..1: how far the multiply colour is pulled toward the tinted dark at the deepest corner (knob) */
-    strength: 0.62,
+    strength: 0.7,
     /** ×lerp(seedBoost, 1, growth): the seed sits a little deeper in the dark */
     seedBoost: 1.12,
     /** lightness (0..1 sRGB) of the multiply colour at full strength — never black */
-    edgeLum: 0.3,
+    edgeLum: 0.12,
     /** OKLCH chroma of that colour before the palette's vividness scales it */
     tint: 0.042,
     /** fall-off is smoothstep(start, end, d)^gamma in half-frame units (edges are 1, corners √2) */
@@ -153,7 +153,7 @@ export const textureParams = {
     /** highlights → bloomLight */
     light: { chroma: 0.055, gain: 1.35, from: 0.3, to: 0.92 },
     /** a faint lift in the toe so nothing is dead black (soft-light multiplies the deep, so this is a gain, not an offset) */
-    lift: { amount: 0.2, end: 0.2 },
+    lift: { amount: 0.1, end: 0.2 },
     /** the seed is cooler and flatter: tints rotate toward coolHue, less strength, more lift, softer highlights */
     seed: { cool: 0.55, coolHue: 250, coolChroma: 0.035, strength: 0.7, flat: 0.75, flatLift: 0.09, flatRoll: 0.05 },
   },

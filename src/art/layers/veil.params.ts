@@ -151,7 +151,7 @@ export const veilParams = {
     /** where the discs go: near the light, hugging the edges, anywhere */
     where: [0.34, 0.42, 0.24],
     /** peak alpha of the rim before the sliders (0..1) */
-    alpha: [0.36, 0.74],
+    alpha: [0.29, 0.59],
     /** interior level (fraction of the rim peak), rim height, rim position and width in unit radii */
     centre: [0.5, 0.7], rim: [0.3, 0.6], rimAt: 0.88, rimWidth: 0.22,
     /** three looks: a filled glow, a brighter-rimmed ring, and the standard disc (the rest) */

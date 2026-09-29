@@ -69,7 +69,7 @@ export const lumenParams = {
   teardrop: { sM: 0.46, ra: 1.8, rb: 0.9, tp: 0.55 },
 
   /** exposure: the glass has to stand above a sea that is already lit around the anchor */
-  expose: { gain: 1.32, edge: 1.25, white: 0.16 },
+  expose: { gain: 1.1, edge: 1.25, white: 0.16 },
 
   /** how the petals look under the four Glass traits (body-trait, so they may show before the reveal) */
   glass: {
@@ -109,16 +109,16 @@ export const lumenParams = {
 
   /** the four light classes (traits.bloom.light) */
   light: {
-    lamp: { core: 0.062, coreGlow: 3.0, halo: 1.05, haloA: 0.36, glare: 0.42, rays: 15, rayLen: [0.9, 1.5], rayA: [0.05, 0.1], shafts: 0, streak: 0, ghosts: 0, ring: 0 },
-    radiant: { core: 0.074, coreGlow: 3.3, halo: 1.5, haloA: 0.46, glare: 0.58, rays: 30, rayLen: [1.1, 2.4], rayA: [0.06, 0.14], shafts: 3, streak: 0, ghosts: 0, ring: 0 },
-    blazing: { core: 0.098, coreGlow: 3.7, halo: 1.75, haloA: 0.54, glare: 0.62, rays: 34, rayLen: [1.2, 2.6], rayA: [0.08, 0.16], shafts: 4, streak: 0.6, ghosts: 0, ring: 0.5 },
-    nova: { core: 0.12, coreGlow: 3.7, halo: 2.05, haloA: 0.6, glare: 0.72, rays: 44, rayLen: [1.4, 3.0], rayA: [0.09, 0.18], shafts: 6, streak: 1.0, ghosts: 5, ring: 1 },
+    lamp: { core: 0.062, coreGlow: 3.0, halo: 1.05, haloA: 0.27, glare: 0.315, rays: 15, rayLen: [0.9, 1.5], rayA: [0.05, 0.1], shafts: 0, streak: 0, ghosts: 0, ring: 0 },
+    radiant: { core: 0.074, coreGlow: 3.3, halo: 1.5, haloA: 0.345, glare: 0.435, rays: 30, rayLen: [1.1, 2.4], rayA: [0.06, 0.14], shafts: 3, streak: 0, ghosts: 0, ring: 0 },
+    blazing: { core: 0.098, coreGlow: 3.7, halo: 1.75, haloA: 0.405, glare: 0.465, rays: 34, rayLen: [1.2, 2.6], rayA: [0.08, 0.16], shafts: 4, streak: 0.6, ghosts: 0, ring: 0.5 },
+    nova: { core: 0.12, coreGlow: 3.7, halo: 2.05, haloA: 0.45, glare: 0.54, rays: 44, rayLen: [1.4, 3.0], rayA: [0.09, 0.18], shafts: 6, streak: 1.0, ghosts: 5, ring: 1 },
   },
 
   /** rays: angular half-width in degrees for hairlines and broad shafts */
   ray: { widthDeg: [0.35, 1.7], shaftDeg: [3.5, 9], shaftA: 0.06, over: 1.12, start: 0.04, gain: 1.75 },
   /** a deep-hue wash of colour around the bloom (fraction of R, alpha) */
-  wash: { radius: 2.1, alpha: 0.13 },
+  wash: { radius: 2.1, alpha: 0.06 },
 
   /** glare pyramid (petals + core drawn at 1/div scale, blurred by repeated halving) */
   glare: { div: 4, bodyK: 0.5, levels: [0.34, 0.32, 0.3, 0.28, 0.26], depth: [3, 4, 4, 5] },
@@ -135,13 +135,13 @@ export const lumenParams = {
     aspect: 0.21,
     /** body alpha and glare of the bud; the heart sits inside it, this far along its length */
     alpha: 0.3,
-    glare: 0.3,
+    glare: 0.225,
     coreShift: 0.2,
     petals: 7,
     rings: 3,
     core: 0.04,
     halo: 0.8,
-    haloA: 0.3,
+    haloA: 0.225,
     /** extra ember at the start so the seed is still legible (0..1 of the way to the full colour) */
     ember: 0.5,
     wick: { len: 0.85, alpha: 0.28 },

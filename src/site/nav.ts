@@ -2,9 +2,14 @@ import { $, $$ } from './lib/dom.ts';
 
 export function initNav() {
   const nav = $('#nav')!;
+  const links = $$<HTMLAnchorElement>('.nav__links a');
   const toggle = $('#navToggle') as HTMLButtonElement;
   const sheet = $('#navSheet')!;
-  const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 24);
+  const onScroll = () => {
+    nav.classList.toggle('is-scrolled', window.scrollY > 24);
+    nav.classList.toggle('is-top', window.scrollY < window.innerHeight * 0.5);
+    if (window.scrollY < 40) links.forEach((l) => l.classList.remove('is-current'));
+  };
   onScroll();
   addEventListener('scroll', onScroll, { passive: true });
 
@@ -19,11 +24,10 @@ export function initNav() {
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && !sheet.hidden) setOpen(false); });
 
   // current section highlight
-  const links = $$<HTMLAnchorElement>('.nav__links a');
   const map = new Map<string, HTMLAnchorElement>(links.map((a) => [a.getAttribute('href')!.slice(1), a]));
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((es) => {
-      for (const e of es) if (e.isIntersecting) {
+      for (const e of es) if (e.isIntersecting && window.scrollY >= 40) {
         links.forEach((l) => l.classList.remove('is-current'));
         map.get(e.target.id)?.classList.add('is-current');
       }

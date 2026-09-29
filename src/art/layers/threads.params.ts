@@ -36,11 +36,11 @@ export const threadsParams = {
      */
     glowRows: 230,
     glowRadius: 3.6,
-    glowAlpha: 0.075,
+    glowAlpha: 0.05,
     /** halo canvas: the wide gathering of light around bright filaments */
     haloRows: 90,
     haloRadius: 18,
-    haloAlpha: 0.042,
+    haloAlpha: 0.025,
     /** box-blur radius (in small-canvas px, two passes each way) */
     /** exposure control: cell size (px) of the crowding map and the level at which a crowd stops adding light */
     densCell: 22,
@@ -49,7 +49,7 @@ export const threadsParams = {
     blurHalo: 1,
     /** the thin white-hot core: width as a fraction of the body, and its alpha gain */
     /** overall brightness of every filament (1 = as authored per family) */
-    gain: 1.2,
+    gain: 0.9,
     coreWidth: 0.4,
     coreGain: 1.15,
     /** how much of the palette's `light` role tints the core */

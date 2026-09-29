@@ -127,8 +127,8 @@ export const strataParams = {
 
   // ── colour of the sheets (OKLab) ──────────────────────────────────
   color: {
-    /** lightness range of a sheet's body colour, deepest to lightest */
-    lightness: [0.2, 0.46],
+    /** lightness range of a sheet's body colour, deepest to lightest (deep jewel tones: the sea is dark, the bloom is not) */
+    lightness: [0.12, 0.32],
     /** chroma relative to the palette's mid (medium saturation, 60–80 %) */
     chroma: [0.74, 0.94],
     /** lightness shift from a sheet's top edge to its bottom edge */
@@ -197,11 +197,11 @@ export const strataParams = {
     /** the tint gets more absorbing with depth in the sheet */
     depthTint: 0.32,
     /** light near the anchor: floor, gain, radius (× R), extra while the bloom opens, horizon haze mixed into the tint */
-    lit: { floor: 0.58, gain: 0.42, radius: 1.05, bloom: 0.25, haze: 0.22 },
+    lit: { floor: 0.28, gain: 0.72, radius: 1.05, bloom: 0.25, haze: 0.16 },
     /** luminance shoulder (0..255): the body's brightness saturates toward cap, the knee is this fraction of it */
-    cap: 112, knee: 0.55,
+    cap: 84, knee: 0.55,
     /** how much of the tint is emitted (backlit) rather than merely filtering the view */
-    emit: 0.8,
+    emit: 0.6,
     /** broad polished sheen */
     sheen: 0.09,
     /** how the tint varies with the streak field and the broad drift field */
@@ -211,7 +211,7 @@ export const strataParams = {
     /** noise-ridge bright ribbons in the body */
     ribbonPow: 7, ribbonGain: 0.14,
     /** edge light: gain, and the floor of its dependence on the anchor light */
-    rimGain: 0.62, rimLit: 0.55,
+    rimGain: 0.5, rimLit: 0.55,
   },
 
   // ── the halocline lines and the fine detail (full resolution) ───────

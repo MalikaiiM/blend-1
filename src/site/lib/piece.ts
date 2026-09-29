@@ -123,6 +123,8 @@ export class LivePiece {
   private lastDraw = 0;
   private dirty = true;
   bleed = 0.028;
+  /** cap on draw rate; the breath is an 11 s sine and does not need 60 fps */
+  maxFps = 60;
 
   constructor(readonly canvas: HTMLCanvasElement) {
     this.g = canvas.getContext('2d', { alpha: false })!;
@@ -134,9 +136,12 @@ export class LivePiece {
       this.prev = flatten(this.cur, { dx: this.px, dy: this.py, time: (performance.now() - this.t0) / 1000, bleed: this.bleed });
       this.fade = 0;
     } else { this.prev = null; this.fade = 1; }
-    if (p.w !== this.canvas.width || p.h !== this.canvas.height) { this.canvas.width = p.w; this.canvas.height = p.h; }
+    const resized = p.w !== this.canvas.width || p.h !== this.canvas.height;
+    if (resized) { this.canvas.width = p.w; this.canvas.height = p.h; }
     this.cur = p;
     this.dirty = true;
+    // resizing clears the canvas: paint at once so a blank frame is never presented
+    if (resized) composite(this.g, p, { dx: this.px, dy: this.py, time: (performance.now() - this.t0) / 1000, bleed: reducedMotion() ? 0 : this.bleed });
     this.kick();
   }
   pointer(nx: number, ny: number) { this.tx = nx; this.ty = ny; this.dirty = true; this.kick(); }
@@ -152,7 +157,7 @@ export class LivePiece {
     if (!this.visible || document.hidden) return;
     const reduced = reducedMotion();
     const throttled = this.slow > 8;
-    const minGap = throttled ? 66 : 16;
+    const minGap = throttled ? 66 : Math.max(16, 1000 / this.maxFps - 2);
     if (now - this.lastDraw < minGap) { this.kick(); return; }
     this.lastDraw = now;
 

@@ -1,0 +1,21 @@
+/* Footer.  Block: .foot (the root element is shared with nav.css; this file owns its inside) */
+footer.foot { padding: 0; border-top: 1px solid var(--hair); }
+.foot__inner { display: grid; gap: 48px; padding-block: clamp(56px, 8vw, 96px) 32px; }
+.foot__mark { font-size: clamp(2rem, 4vw, 2.75rem); line-height: 1; letter-spacing: -0.01em; text-decoration: none; }
+.foot__tag { margin-top: 14px; max-width: 26ch; font-style: italic; color: var(--mute); font-size: 1.15rem; line-height: 1.35; }
+.foot__nav ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 24px; }
+.foot__nav a { display: inline-flex; align-items: center; min-height: 44px; font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; color: var(--ink-2); transition: color var(--t-fast); }
+.foot__nav a:hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 6px; }
+.foot__fine { display: grid; gap: 10px; align-content: start; max-width: 44ch; }
+.foot__live { color: var(--ink-2); font-size: 1.1rem; line-height: 1.4; text-wrap: pretty; }
+.foot__credit, .foot__copy { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute); }
+.foot__base { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 20px; border-top: 1px solid var(--hair); }
+.foot__top { display: inline-flex; align-items: center; min-height: 44px; font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; color: var(--ink-2); }
+.foot__top:hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 6px; }
+.foot a:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
+
+@media (min-width: 960px) {
+  .foot__inner { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 1.1fr); column-gap: clamp(32px, 5vw, 80px); align-items: start; }
+  .foot__nav ul { grid-template-columns: repeat(2, auto); justify-content: start; gap: 0 clamp(24px, 4vw, 56px); }
+  .foot__base { grid-column: 1 / -1; }
+}
