@@ -41,7 +41,7 @@ export default function mount(root: HTMLElement) {
     el('div', { class: 'mint__row' },
       el('dt', {}, label),
       el('dd', {},
-        el('time', { datetime: isoOf(block) }, el('span', { class: 'mint__date' }, dateOf(block)), el('span', { class: 'mint__time' }, timeOf(block))),
+        el('time', { datetime: isoOf(block) }, el('span', { class: 'mint__date' }, dateOf(block)), ' ', el('span', { class: 'mint__time' }, timeOf(block))),
         el('span', { class: 'mint__blk num' }, `Block ${fmtInt(block)}`),
       ),
     );

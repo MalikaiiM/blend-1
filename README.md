@@ -41,6 +41,7 @@ npm run build          # type-check + production build into dist/
 npm run preview        # serve the build — also on a free port (starts at 4173)
 npm test               # mechanic vectors, clock, provenance
 npm run dev:raw        # plain `vite`, if you want to manage the port yourself
+npm run build:single     # the whole site as ONE self-contained file: dist-single/halocline.html (opens straight from disk, no server)
 ```
 
 ## The art in one paragraph

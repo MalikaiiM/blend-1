@@ -16,7 +16,8 @@
     "provenance": "tsx scripts/provenance.ts",
     "render:canonical": "node scripts/render-canonical.mjs",
     "test:determinism": "node scripts/determinism.mjs",
-    "dev:raw": "vite"
+    "dev:raw": "vite",
+    "build:single": "node scripts/build-single.mjs"
   },
   "devDependencies": {
     "@types/node": "^26.6.3",

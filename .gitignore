@@ -8,3 +8,4 @@ screenshots/*
 provenance-out/
 .dev-url
 .preview-url
+dist-single
