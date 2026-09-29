@@ -87,11 +87,11 @@ const P = {
    */
   growth: {
     windows: {
-      abyss: [0.0, 0.22],
-      strata: [0.04, 0.42],
-      threads: [0.16, 0.74],
-      bud: [0.0, 0.92],
-      veil: [0.3, 0.9],
+      abyss: [0.0, 0.25],
+      strata: [0.03, 0.5],
+      threads: [0.14, 0.88],
+      bud: [0.0, 1.0],
+      veil: [0.3, 0.95],
     } as Record<string, [number, number]>,
     /** global value multiplier at t=0 (rises to 1) — the seed starts dim */
     dimAt0: 0.3,
@@ -233,13 +233,15 @@ const P = {
     colorfulness: [0.06, 0.6],
     litCoverage: [0.03, 0.7],
     /** the bloom core must stand clear of the average frame */
-    bloomContrast: [0.08, 1],
+    bloomContrast: [0.25, 1],
     /** mean |ΔL| per pixel — too low is flat/blurry, too high is noise */
     edgeEnergy: [0.003, 0.09],
     darkClipMax: 0.6,
     whiteClipMax: 0.2,
     /** distinct hues carrying ≥ 6 % of the chromatic pixels (12 bins) — Blackglass may be 1 */
     hueBinsMin: 1,
+    /** near-mono palettes (Blackglass) are judged on value structure, not hue */
+    mono: { palettes: ['blackglass'], colorfulness: [0.015, 0.6], hueBinsMin: 0 },
     /** two pieces closer than this (RGB distance of 16×20 thumbnails, 0..1 scale ×√(960)) count as near-duplicates */
     nearDuplicate: 0.9,
   },

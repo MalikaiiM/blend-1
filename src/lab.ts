@@ -75,7 +75,7 @@ const lab = {
     const p = build(spec);
     const cv = flat(p);
     const d = cv.getContext('2d')!.getImageData(0, 0, cv.width, cv.height);
-    const m = measure(d.data, cv.width, cv.height, { x: p.lay.cx, y: p.lay.cy, r: p.lay.unit * 0.12 });
+    const m = measure(d.data, cv.width, cv.height, { x: p.lay.cx, y: p.lay.cy, r: p.lay.unit * 0.3 });
     return { m, ms: p.ms, errors: p.errors, traits: p.traits.list.map((e) => [e.key, e.value]), tier: p.traits.tier, score: p.traits.score, horizon: p.traits.horizon.index, title: p.traits.title, bloomR: p.lay.R / p.lay.unit };
   },
   /** 8×10 average-colour thumbnail (0..1) — used to compare draft vs full composition. */

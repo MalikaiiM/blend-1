@@ -71,7 +71,8 @@ const ROLE_DIM: Record<string, number> = { void: 0.55, deep: 1, mid: 1, glass: 1
 
 function tonedPalette(traits: Traits, tl: Timeline) {
   const G = PARAMS.growth;
-  const k = smootherstep(0, 1, tl.t);
+  // tone keeps rising through all four tides (near-linear), so the last tide still visibly ignites
+  const k = 0.35 * smootherstep(0, 1, tl.t) + 0.65 * tl.t;
   const dim = lerp(G.dimAt0, 1, k);
   const sat = lerp(G.satAt0, 1, k);
   const pulse = 1 + PARAMS.clock.pulseAmp * tl.pulse;

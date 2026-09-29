@@ -52,12 +52,14 @@ export function measure(data: Uint8ClampedArray | Uint8Array, w: number, h: numb
   let hueBins = 0;
   if (chromaticN > n * 0.02) for (const b of bins) if (b / chromaticN >= 0.06) hueBins++;
 
-  // core brightness around the bloom anchor
-  let cs = 0, cn = 0;
+  // peak brightness around the bloom anchor: 95th percentile of luma within the core disc
+  // (p95 rather than the mean so an Eclipse — a dark disc ringed by corona — still counts as a bright focal point)
+  const coreVals: number[] = [];
   const x0 = Math.max(0, Math.floor(core.x - core.r)), x1 = Math.min(w - 1, Math.ceil(core.x + core.r));
   const y0 = Math.max(0, Math.floor(core.y - core.r)), y1 = Math.min(h - 1, Math.ceil(core.y + core.r));
-  for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) if ((x - core.x) ** 2 + (y - core.y) ** 2 <= core.r * core.r) { cs += L[y * w + x]!; cn++; }
-  const coreLum = cn ? cs / cn : mean;
+  for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) if ((x - core.x) ** 2 + (y - core.y) ** 2 <= core.r * core.r) coreVals.push(L[y * w + x]!);
+  coreVals.sort((a, b) => a - b);
+  const coreLum = coreVals.length ? coreVals[Math.floor(coreVals.length * 0.95)]! : mean;
 
   // edge energy
   let e = 0;

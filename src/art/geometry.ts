@@ -50,7 +50,8 @@ export function layout(traits: Traits, tl: Timeline, w: number, h: number): Layo
     cy: (hz.anchor[1] + jy) * h,
     R, axis,
     spread: hz.spreadDeg * DEG,
-    bud: lerp(PARAMS.growth.budAt0, 1, growthRamp(tl, 'bud')),
+    // the bud swells in two movements: a slow first half, then a clear swell through the fourth tide ("The Lamp")
+    bud: lerp(PARAMS.growth.budAt0, 1, (() => { const r = growthRamp(tl, 'bud'); return 0.6 * r + 0.4 * r * r * r; })()),
     radial,
     ax: Math.cos(axis), ay: Math.sin(axis),
     light: traits.colors.bloomLight,
