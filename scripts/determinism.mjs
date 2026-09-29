@@ -4,8 +4,9 @@
 //   npm run test:determinism        (needs the dev server)
 import { chromium } from 'playwright';
 import { createHash } from 'node:crypto';
+import { devUrl } from './dev-url.mjs';
 
-const url = process.env.LAB_URL ?? 'http://localhost:5173';
+const url = process.env.LAB_URL ?? devUrl();
 const specs = [];
 for (const seed of ['determinism-a', 'determinism-b', 'determinism-c']) {
   for (const [stage, horizon] of [['seed', 'dawn'], ['tide2', 'dusk'], ['still', 'zenith'], ['opening', 'nadir'], ['bloomed', 'auto'], ['bloomed', 'nadir']])

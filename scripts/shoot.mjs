@@ -14,6 +14,7 @@
 import { chromium } from 'playwright';
 import { mkdirSync, readdirSync, writeFileSync, appendFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { devUrl } from './dev-url.mjs';
 import { pathToFileURL } from 'node:url';
 
 const args = {};
@@ -25,7 +26,7 @@ for (let i = 2; i < process.argv.length; i++) {
     args[k] = v;
   }
 }
-const url = args.url ?? process.env.SITE_URL ?? 'http://localhost:5173';
+const url = args.url ?? process.env.SITE_URL ?? devUrl();
 const out = resolve(args.out ?? 'screenshots/shoot');
 const settle = Number(args.settle ?? 2600);
 const maxSlices = Number(args['max-slices'] ?? 14);

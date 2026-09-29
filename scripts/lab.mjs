@@ -8,11 +8,12 @@
 //   node scripts/lab.mjs strip  --seed foo --horizon 1 --out /tmp/strip.png [--stages seed,tide1,tide2,tide3,tide4,still,reveal,opening,bloomed]
 //   node scripts/lab.mjs info   --seed foo --stage bloomed                               (traits + timings as JSON)
 //
-// Needs the dev server:  npm run dev   (default http://localhost:5173, override with --url or LAB_URL)
+// Needs the dev server:  npm run dev   (URL found via .dev-url; override with --url or LAB_URL)
 
 import { chromium } from 'playwright';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { devUrl } from './dev-url.mjs';
 
 const [cmd = 'shot', ...rest] = process.argv.slice(2);
 const args = {};
@@ -23,7 +24,7 @@ for (let i = 0; i < rest.length; i++) {
     args[k] = v;
   }
 }
-const base = args.url ?? process.env.LAB_URL ?? 'http://localhost:5173';
+const base = args.url ?? process.env.LAB_URL ?? devUrl();
 
 const num = (v, d) => (v === undefined ? d : Number(v));
 const list = (v) => (v ? v.split(',').filter(Boolean) : undefined);

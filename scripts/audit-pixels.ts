@@ -3,13 +3,14 @@
 //   npm run audit:pixels -- [--n 1000] [--set main|holdout] [--stage bloomed] [--w 240 --h 300]
 //                           [--seeds path/to/seeds.json] [--sheets] [--url http://localhost:5173]
 //
-// Needs the dev server (npm run dev). Writes docs/audit/pixels-<set>.json, the "pixels" section of docs/AUDIT.md,
+// Needs the dev server (npm run dev) — the URL is found automatically via .dev-url. Writes docs/audit/pixels-<set>.json, the "pixels" section of docs/AUDIT.md,
 // and (with --sheets) contact sheets of the best and worst renders to screenshots/audit/.
 // Exit code 1 if any seed fails a gate.
 
 import { chromium } from 'playwright';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { PARAMS } from '../src/art/params.ts';
+import { devUrl } from './dev-url.mjs';
 import { pct, writeSection } from './lib-report.ts';
 
 const argv = process.argv.slice(2);
@@ -19,7 +20,7 @@ const N = Number(flag('n') ?? 1000);
 const SET = flag('set') ?? 'main';
 const STAGE = flag('stage') ?? 'bloomed';
 const W = Number(flag('w') ?? 240), H = Number(flag('h') ?? 300);
-const URL = flag('url') ?? process.env.LAB_URL ?? 'http://localhost:5173';
+const URL = flag('url') ?? process.env.LAB_URL ?? devUrl();
 const Q = PARAMS.quality;
 
 const prefix = SET === 'holdout' ? 'halocline-holdout-' : 'halocline-audit-';

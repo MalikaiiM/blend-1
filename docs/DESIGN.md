@@ -239,7 +239,7 @@ LAUNCH.md          the playbook
 
 ## 7. Working conventions
 
-* `npm run dev` serves everything on :5173 (already running in this workspace). `node scripts/lab.mjs` renders PNGs (see its header).
+* `npm run dev` serves everything on the first free port from 5173 (it never takes one already in use; the address it chose is printed and recorded in `.dev-url`, which the scripts read). `node scripts/lab.mjs` renders PNGs (see its header).
 * Look at your own output. Every layer/section change gets a screenshot, a critique, and a fix. Reuse `scripts/lab.mjs` (art) and `scripts/shoot.mjs` (site).
 * Never touch git; the art director commits.
 * Keep `PARAMS` JSON-serialisable (`structuredClone`d for reset). Put magic numbers in your layer's params file.

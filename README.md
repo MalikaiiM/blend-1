@@ -20,13 +20,27 @@ horizon (Dawn, Dusk, Zenith or Nadir) its keeper turned it to, with rare traits 
 
 ## Run it
 
+Needs **Node 20.19+ or 22.12+**. Clone somewhere *outside* `Desktop`, `Documents` and `Downloads` — macOS privacy protection can
+block a background dev server from reading files there (that is the `EPERM: operation not permitted` error).
+
 ```bash
+git clone https://github.com/MalikaiiM/blend-1.git
+cd blend-1
+git checkout claude/cool-wozniak-xddskz      # the branch this was built on
 npm install
-npm run dev            # http://localhost:5173  — the site
-                       # http://localhost:5173/lab.html — the art lab (seed box, block scrubber, layer solo)
+npm run dev                                   # opens your browser on the address it chose
+```
+
+`npm run dev` **never takes a port that something else is already using.** It starts looking at 5173, skips any port another program
+answers on (including forgotten dev servers from other projects — the usual cause of "Internal Server Error" pages that are not this
+site), opens the browser on the one it picked, and prints the address. Use that address, not a bookmarked `localhost:5173`.
+The art lab lives next to the site at `<that address>/lab.html` (seed box, block scrubber, layer solo).
+
+```bash
 npm run build          # type-check + production build into dist/
-npm run preview        # serve the build on :4173
+npm run preview        # serve the build — also on a free port (starts at 4173)
 npm test               # mechanic vectors, clock, provenance
+npm run dev:raw        # plain `vite`, if you want to manage the port yourself
 ```
 
 ## The art in one paragraph

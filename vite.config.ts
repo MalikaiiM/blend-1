@@ -15,5 +15,5 @@ export default defineConfig({
       },
     },
   },
-  server: { host: '0.0.0.0', port: 5173, strictPort: false },
+  // Ports are chosen by scripts/serve.mjs (`npm run dev` / `npm run preview`), which never takes one already in use.
 });

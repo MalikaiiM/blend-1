@@ -13,10 +13,11 @@
 import { chromium } from 'playwright';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { devUrl } from './dev-url.mjs';
 
 const args = {};
 for (let i = 2; i < process.argv.length; i++) if (process.argv[i].startsWith('--')) { const k = process.argv[i].slice(2); args[k] = process.argv[i + 1] && !process.argv[i + 1].startsWith('--') ? process.argv[++i] : 'true'; }
-const url = args.url ?? process.env.LAB_URL ?? 'http://localhost:5173';
+const url = args.url ?? process.env.LAB_URL ?? devUrl();
 const out = args.out ?? 'out/canonical';
 const W = Number(args.w ?? 2400), H = Number(args.h ?? 3000);
 const seedsFile = args.seeds;

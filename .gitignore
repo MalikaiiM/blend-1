@@ -6,3 +6,5 @@ dist
 screenshots/*
 !screenshots/.gitkeep
 provenance-out/
+.dev-url
+.preview-url

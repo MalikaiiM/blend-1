@@ -5,9 +5,9 @@
   "type": "module",
   "description": "Halocline \u2014 a generative art drop that grows on the block clock and blooms by the hand of its keeper.",
   "scripts": {
-    "dev": "vite --host 0.0.0.0 --port 5173",
+    "dev": "node scripts/serve.mjs dev",
     "build": "tsc --noEmit && vite build",
-    "preview": "vite preview --host 0.0.0.0 --port 4173",
+    "preview": "node scripts/serve.mjs preview",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
     "audit:traits": "tsx scripts/audit-traits.ts",
@@ -15,7 +15,8 @@
     "shoot": "node scripts/shoot.mjs",
     "provenance": "tsx scripts/provenance.ts",
     "render:canonical": "node scripts/render-canonical.mjs",
-    "test:determinism": "node scripts/determinism.mjs"
+    "test:determinism": "node scripts/determinism.mjs",
+    "dev:raw": "vite"
   },
   "devDependencies": {
     "@types/node": "^26.6.3",
@@ -28,5 +29,8 @@
     "@fontsource/dm-mono": "^5.3.0",
     "@fontsource/instrument-serif": "^5.3.0",
     "@noble/hashes": "^2.4.0"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
   }
 }
